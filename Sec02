@@ -1,0 +1,29 @@
+Sec02
+스프링에서 웹 개발을 할때 크게 다음과 같은 3가지 방식으로 나뉜다.
+>> 정적 컨텐츠, MVC와 템플릿 엔진, API
+
+1. 정적 컨텐츠
+정적 컨텐츠는 Spring에서 html에 별도의 프로그래밍 없이, 파일을 그대로 웹 브라우저에 내려주는 것을 말한다
+예를 들어, static 폴더 밑에 hello-spring.html 파일을 생성하고, 빌드하면 웹에서 http://localhost:8080/hello-static.html로 바로 접근할 수 있다.
+다시 말하면 html으로 변환하지 않고 있는 그대로 웹에 넘겨준다는 것이다.
+이때 생각해야 할 점은, Spring은 Controller쪽에서 먼저 hello-static에 mapping된 컨트롤러가 있는지 확인하고, 없으면 static/ 밑 폴더로 찾아간다는 점을 유의하자.
+
+2. MVC와 템플릿 엔진
+MVC는 Model, View, Controller의 약자이다.
+비즈니스 로직과 컨트롤은 Controller에서 처리하고, View는 뷰어의 역할에 충실, Model은 말 그대로 모델을 생각하면 된다.
+작동 과정은 Sec01에서 했던 방식과 동일한데, 추가된건 @RequestParam으로 원하는 data:name을 받아오는다는 점을 유의하자.
+
+
+3. API
+API 방식은 @ResponseBody를 사용해서 ViewResolver를 사용하지 않고 HTTP의 Body에 문자 내용을 직접 return 한다.
+실제로 페이지에서 소스코드를 보면, html 태그하나 없이 문자 내용 그대로 있는 것을 확인할 수 있다(잘 쓰는 방식은 아님)
+
+문자가 아닌 데이터를 반환하는 방법을 생각해보자.
+똑같이 @ResponseBody를 이용해서 이번엔 문자가 아닌 객체를 생성하고, 이 객체를 return 하면 json 방식으로 반환해서 심플하게 처리할 수 있다.
+
+작동 과정은 웹 브라우저에서 hello-api를 던지면 내장 톰캣 서버에서 받고, 
+다시 스프링에 던지면 스프링 컨트롤러가 받아서 Mapping된 메소드를 실행하는 것 까진 MVC 방식과 동일하다.
+하지만 이때 @ResponseBody가 있으면 MVC 방식처럼 View Resolver가 맞는 템플릿에 던지지않고, HTTP 응답에 그대로 넘기는 방식으로 처리한다.
+이때 Response하는게 객체인 경우 자바 스프링에서는, 디폴트 값으로 Json 방식으로 데이터를 만들어서 HTTP 응답에 반환한다.
+기존에는 View Resolver가 동작했지만, 이번에는 HttpMessageConverter : JsonConvertor가 동작해서 Json 스타일로 바꾼다.
+이 변환한 Json을 웹 브라우저에 다시 넘겨주고 끝이 난다!
