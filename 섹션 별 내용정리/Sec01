@@ -1,6 +1,5 @@
-Mac에서 IntelliJ와 Java 환경설정을 완료하고, JavaSpring을 이용해서 간단하게 프로젝트를 빌드하고 실행하는 법을 학습.
+Sec01 - 프로젝트 환경설정과 MVC 방식 맛보기
 
-Sec01(MVC방식 맛보기)
 먼저, 웹 브라우저에서 /hello를 던져주면(주소창에 localhost:8080/hello) 스프링에 내장된 톰캣 내장서버가 받고 
 다시 스프링에게 hello 를 던져서 @GepMapping("hello")으로 mapping된 method hello를 실행하게 된다
 이떄 스프링이 Model을 만들어서 method의 파라미터로 넘겨주고, model.addAtrribute("data", "hello!!")으로 키와 데이터값을 입력하고 컨트롤러가 "hello"를 리턴한다
